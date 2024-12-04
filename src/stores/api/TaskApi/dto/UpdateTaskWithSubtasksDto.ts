@@ -1,9 +1,4 @@
-export interface Subtask {
-    id: string
-    title: string
-    description: string
-    isDone: boolean
-}
+import { Subtask } from "@/src/types/Subtasks"
 
 export interface UpdateTaskWithSubtasksDto {
     taskId: string

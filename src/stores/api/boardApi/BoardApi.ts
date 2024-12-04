@@ -63,7 +63,7 @@ const boardApi = rtkApi.injectEndpoints({
 
         // DELETE
         deleteBoard: build.mutation<void, DeleteBoardDto>({
-            query: ({ boardId }) => ({ url: `/boards/${boardId}`, method: 'DELETE' }),
+            query: ({ boardId }) => ({ url: `/boards/delete/${boardId}`, method: 'DELETE' }),
         }),
     }),
 })
