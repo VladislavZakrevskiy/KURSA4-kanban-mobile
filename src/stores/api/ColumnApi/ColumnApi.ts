@@ -32,7 +32,7 @@ const columnApi = rtkApi.injectEndpoints({
 
         // DELETE
         deleteColumn: build.mutation<void, DeleteColumnDto>({
-            query: ({ columnId, boardId }) => ({ url: `/columns/${columnId}`, body: { boardId }, method: 'DELETE' }),
+            query: ({ columnId, boardId }) => ({ url: `/columns/delete/${columnId}`, body: { boardId }, method: 'DELETE' }),
         }),
     }),
 })
