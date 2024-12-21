@@ -16,6 +16,7 @@ interface EditBoardModalProps {
     isOpen: boolean
     setIsOpen: (newValue: boolean) => void
     boardId: string
+    refetch: Function
 }
 
 const validationSchema = Yup.object().shape({
@@ -25,7 +26,7 @@ const validationSchema = Yup.object().shape({
         .max(300, 'Description cannot be more than 300 characters'),
 })
 
-export const EditBoardModal: FC<EditBoardModalProps> = ({ isOpen, setIsOpen, boardId }) => {
+export const EditBoardModal: FC<EditBoardModalProps> = ({ isOpen, setIsOpen, boardId, refetch }) => {
     const [isDeleteOpen, setIsDeleteOpen] = useState(false)
     const [initialValues, setInitialValues] = useState({ title: '', description: '' })
     const [updateBoardApi, { isLoading }] = useUpdateBoardMutation()
@@ -39,6 +40,7 @@ export const EditBoardModal: FC<EditBoardModalProps> = ({ isOpen, setIsOpen, boa
 
     const onSubmit = async (values: { title: string; description: string }) => {
         const { data } = await updateBoardApi({ id: boardId, ...values })
+        await refetch()
         if (data) {
             updateBoard({ boardId, ...updateBoard })
         }
@@ -87,7 +89,13 @@ export const EditBoardModal: FC<EditBoardModalProps> = ({ isOpen, setIsOpen, boa
                     </VStack>
                 )}
             </Formik>
-            <DeleteModal id={boardId} isOpen={isDeleteOpen} setIsOpen={setIsDeleteOpen} type="Board" />
+            <DeleteModal
+                refetch={refetch}
+                id={boardId}
+                isOpen={isDeleteOpen}
+                setIsOpen={setIsDeleteOpen}
+                type="Board"
+            />
         </Modal>
     )
 }

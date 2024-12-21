@@ -4,7 +4,7 @@ import { AuthProvider } from '@/src/components/providers/AuthProvider/AuthProvid
 import { useAppSelector } from '@/src/lib/hooks/useAppSelector'
 import { useThrottledState } from '@/src/lib/hooks/useThrottleState'
 import { useGetBoardsByIdQuery } from '@/src/stores'
-import { useMoveTaskMutation } from '@/src/stores/api/TaskApi/TaskApi'
+// import { useMoveTaskMutation } from '@/src/stores/api/TaskApi/TaskApi'
 import { getBoardColumns, useBoardActions } from '@/src/stores/boardStore/boardStore'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useEffect, useRef } from 'react'
@@ -17,7 +17,7 @@ const BoardPage = () => {
     const { id } = useLocalSearchParams()
     const { currentBoard } = useAppSelector((state) => state.board)
     const columns = useAppSelector(getBoardColumns)
-    const { data, isLoading, isError } = useGetBoardsByIdQuery((id as string) || '', {
+    const { data, isLoading, isError, refetch } = useGetBoardsByIdQuery((id as string) || '', {
         refetchOnMountOrArgChange: true,
         refetchOnReconnect: true,
     })
@@ -27,7 +27,7 @@ const BoardPage = () => {
     const horScrollViewRef = useRef<ScrollView | null>(null)
     const { tasks } = useAppSelector((state) => state.board)
     const [canScoll, setCanScroll] = useThrottledState(true, 300)
-    const [moveTaskApi] = useMoveTaskMutation()
+    // const [moveTaskApi] = useMoveTaskMutation()
 
     useEffect(() => {
         if (data) {
@@ -92,14 +92,24 @@ const BoardPage = () => {
 
     const columnWidth = Dimensions.get('screen').width * 0.75 + 24
     const handleDrop = (draggableId: string, dropZoneId: string) => {
-        setCanScroll(true)
-        const currentTask = tasks.entities[draggableId.slice(5)]
+        let currentTask = tasks.entities[draggableId.slice(5)]
+        currentTask.columnId = ''
+        for (const column of columns) {
+            console.log(column)
+            if (column.tasks.find(({ id }) => id == currentTask.id)) {
+                console.log('OOOKOKOKOKOKOKOKOKOKOKOK')
+                currentTask = { ...currentTask, columnId: column.id }
+                break
+            }
+        }
+        console.log(currentTask)
         moveTask({
             sourceColumnId: currentTask.columnId,
             taskId: draggableId.slice(5),
             targetColumnId: dropZoneId.slice(7),
         })
-        moveTaskApi({ newColumnId: dropZoneId.slice(7), taskId: draggableId.slice(5) })
+        setCanScroll(true)
+        // moveTaskApi({ newColumnId: dropZoneId.slice(7), taskId: draggableId.slice(5) })
     }
 
     const handleDragMove = () => {
@@ -123,7 +133,12 @@ const BoardPage = () => {
                             <GestureHandlerRootView style={{ flex: 1 }}>
                                 <HStack gap={24} style={{ flex: 1, paddingHorizontal: 24, paddingVertical: 24 }}>
                                     {columns.map((column) => (
-                                        <TaskColumn setCanScroll={setCanScroll} columnId={column.id} key={column.id} />
+                                        <TaskColumn
+                                            refetch={refetch}
+                                            setCanScroll={setCanScroll}
+                                            columnId={column.id}
+                                            key={column.id}
+                                        />
                                     ))}
                                 </HStack>
                             </GestureHandlerRootView>

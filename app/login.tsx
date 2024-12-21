@@ -8,13 +8,13 @@ import { useState } from 'react'
 import { Pressable } from 'react-native'
 
 const Login = () => {
-    const [authData, setAuthData] = useState<{ login: string; password: string }>({ login: '', password: '' })
+    const [authData, setAuthData] = useState<{ username: string; password: string }>({ username: '', password: '' })
     const [login, { isLoading, isError }] = useLoginMutation()
     const { setUser } = useUserActions()
     const router = useRouter()
 
     const onSubmit = async () => {
-        const { data } = await login({ email: authData.login, password: authData.password })
+        const { data } = await login({ username: authData.username, password: authData.password })
         if (data) {
             setUser(data.user)
             await AsyncStorageService.setItem(ACCESS_TOKEN, data.access_token)
@@ -35,27 +35,26 @@ const Login = () => {
                         </Text>
                     </Pressable>
                 </HStack>
-                <VStack align="flex-start" justify="center" gap={10}>
+                <VStack align="stretch" style={{ minWidth: '90%' }} gap={10} max>
                     <TextField
                         type="email-address"
                         max
                         error={isError ? 'Invalid login or password' : undefined}
                         label="Login"
-                        onChange={(login) => setAuthData((prev) => ({ ...prev, login }))}
+                        onChange={(username) => setAuthData((prev) => ({ ...prev, username }))}
                         placeholder="Login"
-                        value={authData.login}
+                        value={authData.username}
                     />
                     <TextField
                         type="visible-password"
                         max
-                        style={{ width: '100%' }}
                         error={isError ? 'Invalid login or password' : undefined}
                         label="Password"
                         onChange={(password) => setAuthData((prev) => ({ ...prev, password }))}
                         value={authData.password}
                         placeholder="Password"
                     />
-                    <Button style={{ width: '100%' }} loading={isLoading} onPress={onSubmit}>
+                    <Button loading={isLoading} onPress={onSubmit}>
                         Submit
                     </Button>
                 </VStack>

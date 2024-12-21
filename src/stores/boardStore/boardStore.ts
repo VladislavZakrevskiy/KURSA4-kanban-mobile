@@ -35,7 +35,7 @@ const boardSlice = buildSlice({
             }
             for (const column of action.payload.columns) {
                 for (const task of column.tasks) {
-                    subtasks = [...subtasks, ...task.subtasks]
+                    subtasks = [...subtasks, ...(task.subtasks || [])]
                 }
             }
             tasksAdapter.setAll(state.tasks, tasks)
@@ -110,7 +110,11 @@ const boardSlice = buildSlice({
             const source = state.columns.entities[sourceColumnId]
             const targer = state.columns.entities[targetColumnId]
             const task = state.tasks.entities[taskId]
-
+            // console.log(targer)
+            // console.log(source)
+            // console.log(sourceColumnId)
+            // console.log(targetColumnId)
+            // console.log(state.columns.entities)
             if (source.id === targer.id) {
                 return
             }

@@ -20,6 +20,7 @@ import { AddTaskModal } from '../Task/TaskModal/AddTaskModal'
 interface TaskColumnProps {
     columnId: string
     setCanScroll: (newValue: boolean) => void
+    refetch: Function
 }
 
 const TaskItem = ({ taskId, setCanScroll }: { taskId: string; setCanScroll: (newValue: boolean) => void }) => {
@@ -43,7 +44,7 @@ const TaskItem = ({ taskId, setCanScroll }: { taskId: string; setCanScroll: (new
     )
 }
 
-export const TaskColumn: FC<TaskColumnProps> = ({ columnId, setCanScroll }) => {
+export const TaskColumn: FC<TaskColumnProps> = ({ columnId, setCanScroll, refetch }) => {
     const [isOpen, setIsOpen] = useState(false)
     const columnWidth = Dimensions.get('screen').width * 0.75
     const column = useAppSelector(getColumnById(columnId))
@@ -76,9 +77,9 @@ export const TaskColumn: FC<TaskColumnProps> = ({ columnId, setCanScroll }) => {
                                 </TouchableOpacity>
                             </HStack>
                             <VStack style={{ overflow: 'visible' }} gap={10}>
-                                {column.tasks.map((task) => (
-                                    <TaskItem setCanScroll={setCanScroll} key={task.id} taskId={task.id} />
-                                ))}
+                                {column.tasks.map((task) => {
+                                    return <TaskItem setCanScroll={setCanScroll} key={task.id} taskId={task.id} />
+                                })}
                                 <View>
                                     <TouchableOpacity onPress={() => setIsAddOpen(true)}>
                                         <Paper
@@ -100,7 +101,13 @@ export const TaskColumn: FC<TaskColumnProps> = ({ columnId, setCanScroll }) => {
                     </Paper>
                 )}
             </DragProvider.DropZone>
-            <AddTaskModal status={column.title} columnId={column.id} isOpen={isAddOpen} setIsOpen={setIsAddOpen} />
+            <AddTaskModal
+                refetch={refetch}
+                status={column.title}
+                columnId={column.id}
+                isOpen={isAddOpen}
+                setIsOpen={setIsAddOpen}
+            />
             <EditColumnModal columnId={columnId} isOpen={isOpen} setIsOpen={setIsOpen} />
         </>
     )

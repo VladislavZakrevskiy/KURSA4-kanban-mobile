@@ -31,6 +31,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
                 const { data } = await getMe()
                 if (data) {
                     setUser(data)
+                } else {
+                    router.push('/login')
+                    await AsyncStorageService.removeItem(ACCESS_TOKEN)
                 }
             } else {
                 router.push('/login')

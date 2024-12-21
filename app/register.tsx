@@ -44,9 +44,8 @@ const Register = () => {
                         </Text>
                     </Pressable>
                 </HStack>
-                <VStack align="flex-start" justify="center" gap={10}>
+                <VStack align="stretch" justify="center" style={{ minWidth: '90%' }} gap={10}>
                     <TextField
-                        max
                         error={isError ? 'Invalid something' : undefined}
                         label="Username"
                         onChange={(username) => setAuthData((prev) => ({ ...prev, username }))}
@@ -54,7 +53,6 @@ const Register = () => {
                         value={authData.username}
                     />
                     <TextField
-                        max
                         error={isError ? 'Invalid something' : undefined}
                         label="Login"
                         onChange={(login) => setAuthData((prev) => ({ ...prev, login }))}
@@ -62,7 +60,6 @@ const Register = () => {
                         value={authData.login}
                     />
                     <TextField
-                        max
                         error={isError ? 'Invalid something' : undefined}
                         label="Password"
                         onChange={(password) => setAuthData((prev) => ({ ...prev, password }))}

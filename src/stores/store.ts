@@ -17,7 +17,7 @@ const rootReducers = combineReducers({
 export const createReduxStore = () => {
     const store = configureStore({
         reducer: rootReducers,
-        devTools: Contants.expoConfig?.extra?.IS_DEV === 'true',
+        devTools: false,
         middleware: (getDefaultMiddleware) => getDefaultMiddleware({}).concat(rtkApi.middleware),
     })
 

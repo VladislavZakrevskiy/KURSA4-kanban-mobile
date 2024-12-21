@@ -17,7 +17,7 @@ import { AddColumnModal } from '../Board/Column/AddColumnModal'
 
 export const Header = () => {
     const { top } = useSafeAreaInsets()
-    const { isLoading, data } = useGetUserBoardsDetailsQuery()
+    const { isLoading, data, refetch } = useGetUserBoardsDetailsQuery()
     const { setAllBoards } = useAllBoardsActions()
     const { theme } = useAppSelector((state) => state.theme)
     const { currentBoard } = useAppSelector((state) => state.board)
@@ -56,6 +56,7 @@ export const Header = () => {
                 </HStack>
 
                 <HeaderMenu
+                    refetch={refetch}
                     boards={data ? data : []}
                     isLoading={isLoading}
                     isOpen={isOpen}

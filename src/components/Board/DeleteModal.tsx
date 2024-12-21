@@ -13,9 +13,10 @@ interface AddBoardModalProps {
     setIsOpen: (newValue: boolean) => void
     id: string
     type: 'Column' | 'Board' | 'Task'
+    refetch?: Function
 }
 
-export const DeleteModal: FC<AddBoardModalProps> = ({ isOpen, setIsOpen, id, type }) => {
+export const DeleteModal: FC<AddBoardModalProps> = ({ isOpen, setIsOpen, id, type, refetch }) => {
     const [deleteBoardApi, { isLoading: isBoardLaoding }] = useDeleteBoardMutation()
     const [deleteTaskApi, { isLoading: isTaskLaoding }] = useDeleteTaskMutation()
     const [deleteColumnApi, { isLoading: isColumnLoading }] = useDeleteColumnMutation()
@@ -28,6 +29,7 @@ export const DeleteModal: FC<AddBoardModalProps> = ({ isOpen, setIsOpen, id, typ
             case 'Board':
                 await deleteBoardApi({ boardId: id })
                 deleteBoard({ boardId: id })
+                await refetch?.()
                 setIsOpen(false)
                 break
             case 'Column':

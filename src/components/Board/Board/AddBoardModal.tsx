@@ -14,6 +14,7 @@ import { useAppSelector } from '@/src/lib/hooks/useAppSelector'
 interface AddBoardModalProps {
     isOpen: boolean
     setIsOpen: (newValue: boolean) => void
+    refetch: Function
 }
 
 const validationSchema = Yup.object().shape({
@@ -23,7 +24,7 @@ const validationSchema = Yup.object().shape({
         .max(300, 'Description cannot be more than 300 characters'),
 })
 
-export const AddBoardModal: FC<AddBoardModalProps> = ({ isOpen, setIsOpen }) => {
+export const AddBoardModal: FC<AddBoardModalProps> = ({ isOpen, setIsOpen, refetch }) => {
     const initialValues = { title: '', description: '' }
     const [addBoardApi, { isLoading }] = useCreateBoardMutation()
     const { boards } = useAppSelector((state) => state.allBoards)
@@ -31,8 +32,10 @@ export const AddBoardModal: FC<AddBoardModalProps> = ({ isOpen, setIsOpen }) => 
 
     const onSubmit = async (values: { title: string; description: string }) => {
         const { data } = await addBoardApi(values)
+        console.log(data)
         if (data) {
             setAllBoards([...boards, data])
+            await refetch()
         }
         setIsOpen(false)
     }

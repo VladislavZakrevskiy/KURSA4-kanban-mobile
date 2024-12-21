@@ -18,10 +18,23 @@ interface HeaderMenuProps {
     isOpen: boolean
     boards: Board[]
     isLoading: boolean
+    refetch: Function
     onClick: (board: Board) => void
 }
 
-const MenuItem = ({ id, title, theme, onPress }: { id: string; title: string; theme: Theme; onPress: () => void }) => {
+const MenuItem = ({
+    id,
+    title,
+    theme,
+    onPress,
+    refetch,
+}: {
+    refetch: Function
+    id: string
+    title: string
+    theme: Theme
+    onPress: () => void
+}) => {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
@@ -64,12 +77,12 @@ const MenuItem = ({ id, title, theme, onPress }: { id: string; title: string; th
                     </HStack>
                 )}
             </Pressable>
-            <EditBoardModal boardId={id} isOpen={isOpen} setIsOpen={() => setIsOpen(false)} />
+            <EditBoardModal refetch={refetch} boardId={id} isOpen={isOpen} setIsOpen={() => setIsOpen(false)} />
         </>
     )
 }
 
-export const HeaderMenu: FC<HeaderMenuProps> = ({ isOpen, boards, isLoading, onClick }) => {
+export const HeaderMenu: FC<HeaderMenuProps> = ({ isOpen, boards, isLoading, onClick, refetch }) => {
     const { theme } = useAppSelector((state) => state.theme)
     const { top } = useSafeAreaInsets()
     const [isBoardOpen, setIsBoardOpen] = useState(false)
@@ -101,6 +114,7 @@ export const HeaderMenu: FC<HeaderMenuProps> = ({ isOpen, boards, isLoading, onC
                         ) : (
                             boards?.map((board) => (
                                 <MenuItem
+                                    refetch={refetch}
                                     id={board.id}
                                     theme={theme}
                                     title={board.title}
@@ -110,6 +124,7 @@ export const HeaderMenu: FC<HeaderMenuProps> = ({ isOpen, boards, isLoading, onC
                             ))
                         )}
                         <MenuItem
+                            refetch={() => {}}
                             id="Create"
                             theme={theme}
                             title={'+ Create new board'}
@@ -123,7 +138,7 @@ export const HeaderMenu: FC<HeaderMenuProps> = ({ isOpen, boards, isLoading, onC
                     </Card>
                 </VStack>
             </Card>
-            <AddBoardModal isOpen={isBoardOpen} setIsOpen={setIsBoardOpen} />
+            <AddBoardModal refetch={refetch} isOpen={isBoardOpen} setIsOpen={setIsBoardOpen} />
         </>
     )
 }
