@@ -1,50 +1,53 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# Курсовая по питону 1 семестр
 
-## Get started
+## Проект
 
-1. Install dependencies
+Kanban-приложение
 
-   ```bash
-   npm install
-   ```
+## Команда разработки
 
-2. Start the app
+<table style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-items: end">
+	<tr>
+		<td>
+			<img src="./README/Zykov.jpg"/>
+			<h4>Зыков Владимир Алексеевич</h4>
+      <p>Backend Developer</p>
+      <a href="https://github.com/Afekaaa">Github</a>
+		</td>
+		<td>
+			<img src="./README/Zakrevskiy.jpg"/>
+			<h4>Закревский Владислав Анатольевич</h4>
+      <p>Fullstack Developer, Teamlead</p>
+      <a href="https://github.com/VladislavZakrevskiy">Github</a>
+		</td>
+		<td>
+			<img src="./README/Korochin.jpg"/>
+			<h4>Корочин Владислав Алексеевич</h4>
+      <p>Backend Developer</p>
+      <a href="https://github.com/Vlandenburg">Github</a>
+		</td>
+	</tr>
+</table>
 
-   ```bash
-    npx expo start
-   ```
+## Стек
 
-In the output, you'll find options to open the app in a
+Фронтенд (мобайл): https://github.com/VladislavZakrevskiy/KURSA4-kanban-mobile
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- TypeScript
+- React Native (Expo)
+- Redux Toolkit with Query
+- Custom UI KIT
+- Async-storage
+- Drag'n'Drop
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+``By: Владислав Анатольевич Закревский``
 
-## Get a fresh project
+Бэкенд: https://github.com/VladislavZakrevskiy/KURSA4-kanban-backend
 
-When you're ready, run:
+- Python
+- Django
+- Django Rest Framework
+- Postgres
 
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+``By: Владислав Анатольевич Закревский, Корочин Владислав Алексеевич, Зыков Владимир Алексеевич``
